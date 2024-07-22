@@ -1,6 +1,10 @@
 <?php
 
-require_once('../../../inc/includes.php');
+declare(strict_types=1);
+
+require __DIR__ . '/inc/includes.php';
+
+// require_once('../../../inc/includes.php');
 
 // Check if current user have config right
 Session::checkRight("entity", UPDATE);

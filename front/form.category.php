@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
+require __DIR__ . '/inc/includes.php';
 
-include('../../../inc/includes.php');
+// include('../../../inc/includes.php');
 
 
 $plugin = new Plugin();

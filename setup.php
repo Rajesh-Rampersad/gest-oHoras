@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 global $CFG_GLPI;
 
 define('PLUGIN_GESTAOHORAS_VERSION', '1.0.0');
@@ -9,7 +11,7 @@ define('PLUGIN_GESTAOHORAS_GLPI_MIN_VERSION', '9.3.3');
 /**
  * Define the plugin's version and informations
  *
- * @return Array [name, version, author, homepage, license, minGlpiVersion]
+ * @return array [name, version, author, homepage, license, minGlpiVersion]
  */
 if (!function_exists("plugin_version_gestaohoras")) {
    function plugin_version_gestaohoras()
@@ -66,17 +68,19 @@ if (!function_exists("plugin_gestaohoras_check_config")) {
  *
  * @param $classname
  * @return bool
+ * @throws Exception
  */
 if (!function_exists("plugin_gestaohoras_autoload")) {
    function plugin_gestaohoras_autoload($classname)
    {
       if (strpos($classname, 'PluginGestaohoras') === 0) {
-
          $filename = __DIR__ . '/inc/' . strtolower(str_replace('PluginGestaohoras', '', $classname)) . '.class.php';
 
          if (is_readable($filename) && is_file($filename)) {
             include_once($filename);
             return true;
+         } else {
+            throw new Exception("Unable to load class file: $filename");
          }
       }
    }
@@ -85,7 +89,6 @@ if (!function_exists("plugin_gestaohoras_autoload")) {
 /**
  * Initialize all classes and generic variables of the plugin
  */
-
 if (!function_exists("plugin_init_gestaohoras")) {
    function plugin_init_gestaohoras()
    {
@@ -98,7 +101,7 @@ if (!function_exists("plugin_init_gestaohoras")) {
       $PLUGIN_HOOKS['config_page']['gestaohoras'] = 'front/balance_hour.php';
       $PLUGIN_HOOKS['menu_toadd']['gestaohoras']['admin'] = 'PluginGestaohorasBalance_Hour';
 
-      $PLUGIN_HOOKS['add_javascript']['gestaohoras'][] = 'js/scripts.js.php';
-
+      // // Add JavaScript
+      // $PLUGIN_HOOKS['add_javascript']['gestaohoras'][] = 'js/scripts.js.php';
    }
 }
